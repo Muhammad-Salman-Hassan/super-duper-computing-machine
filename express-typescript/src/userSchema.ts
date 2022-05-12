@@ -1,6 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
-export const userSchema:Object= new mongoose.Schema({
+interface IUser{
+    name:string;
+    username:string;
+}
+
+export const userSchema= new mongoose.Schema<IUser>({
     name:{
         type:String,
         required:true
