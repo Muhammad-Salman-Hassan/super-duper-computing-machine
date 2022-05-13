@@ -12,7 +12,7 @@ export let getUser = (req: Request, res: Response) => {
         }
     })
 
-    
+
 }
 
 export let getUserbyid = (req: Request, res: Response) => {
@@ -27,32 +27,40 @@ export let getUserbyid = (req: Request, res: Response) => {
 
 //put method
 export let addUser = (req: Request, res: Response) => {
-    let user = new User(req.body)
-    user.save((err: any) => {
+    const { name, username } = req.body
+    if (!name || !username) {
+        return res.send(422).json({ error: "Filled both field" })
+    }
+    let user = new User({
+        name,
+        username
+    })
+    user.save().then(
+        (err: any) => {
+            if (err) {
+                res.send(err)
+            } else {
+                res.send(user)
+            }
+        }
+    )
+}
+
+export let updateUser = (req: Request, res: Response) => {
+    User.findByIdAndUpdate(req.params.id, req.body ).then((err: any) => {
         if (err) {
             res.send(err)
         } else {
-            res.send(user)
-        }
-    })
-}
-
-export let updateUser=(req:Request,res:Response)=>{
-    User.findByIdAndUpdate(req.params.id,req.body,(err:any)=>{
-        if(err){
-            res.send(err)
-        }else{
             res.send("Updated Sucessfully")
         }
     })
-
 }
 
-export let deleteUser=(req:Request,res:Response)=>{
-    User.deleteOne({_id:req.params.id},(err:any)=>{
-        if(err){
+export let deleteUser = (req: Request, res: Response) => {
+    User.deleteOne({ _id: req.params.id }, (err: any) => {
+        if (err) {
             res.send(err)
-        }else{
+        } else {
             res.send("Delete success full")
         }
     })
