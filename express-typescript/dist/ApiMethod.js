@@ -27,8 +27,15 @@ let getUserbyid = (req, res) => {
 exports.getUserbyid = getUserbyid;
 //put method
 let addUser = (req, res) => {
-    let user = new userSchema_1.User(req.body);
-    user.save((err) => {
+    const { name, username } = req.body;
+    if (!name || !username) {
+        return res.send(422).json({ error: "Filled both field" });
+    }
+    let user = new userSchema_1.User({
+        name,
+        username
+    });
+    user.save().then((err) => {
         if (err) {
             res.send(err);
         }
@@ -39,7 +46,7 @@ let addUser = (req, res) => {
 };
 exports.addUser = addUser;
 let updateUser = (req, res) => {
-    userSchema_1.User.findByIdAndUpdate(req.params.id, req.body, (err) => {
+    userSchema_1.User.findByIdAndUpdate(req.params.id, req.body).then((err) => {
         if (err) {
             res.send(err);
         }
