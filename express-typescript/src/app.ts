@@ -23,5 +23,7 @@ app.get('/',(req:Request,res:Response)=>{
 app.get('/users',ApiMethods.getUser)
 app.get('/users/:id',ApiMethods.getUserbyid)
 app.post('/user',ApiMethods.addUser)
+app.put('/user/:id',ApiMethods.updateUser)
+app.delete('/user/:id',ApiMethods.deleteUser)
 
 app.listen(port)

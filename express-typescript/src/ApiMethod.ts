@@ -36,3 +36,24 @@ export let addUser = (req: Request, res: Response) => {
         }
     })
 }
+
+export let updateUser=(req:Request,res:Response)=>{
+    User.findByIdAndUpdate(req.params.id,req.body,(err:any)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send("Updated Sucessfully")
+        }
+    })
+
+}
+
+export let deleteUser=(req:Request,res:Response)=>{
+    User.deleteOne({_id:req.params.id},(err:any)=>{
+        if(err){
+            res.send(err)
+        }else{
+            res.send("Delete success full")
+        }
+    })
+}

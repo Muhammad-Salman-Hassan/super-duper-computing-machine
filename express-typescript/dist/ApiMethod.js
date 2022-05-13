@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addUser = exports.getUserbyid = exports.getUser = void 0;
+exports.deleteUser = exports.updateUser = exports.addUser = exports.getUserbyid = exports.getUser = void 0;
 const userSchema_1 = require("./userSchema");
 // GetMethod
 let getUser = (req, res) => {
@@ -38,3 +38,25 @@ let addUser = (req, res) => {
     });
 };
 exports.addUser = addUser;
+let updateUser = (req, res) => {
+    userSchema_1.User.findByIdAndUpdate(req.params.id, req.body, (err) => {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send("Updated Sucessfully");
+        }
+    });
+};
+exports.updateUser = updateUser;
+let deleteUser = (req, res) => {
+    userSchema_1.User.deleteOne({ _id: req.params.id }, (err) => {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send("Delete success full");
+        }
+    });
+};
+exports.deleteUser = deleteUser;
