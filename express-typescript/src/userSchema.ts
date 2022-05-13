@@ -8,10 +8,12 @@ interface IUser{
 export const userSchema= new mongoose.Schema<IUser>({
     name:{
         type:String,
-        required:true
+        
     },
     username:{
         type:String,
-        required:true
+        
     }
 })
+
+export const User=mongoose.model("USER",userSchema)
